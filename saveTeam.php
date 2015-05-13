@@ -6,6 +6,37 @@ $nick = @$_POST['nick'];
 $email = @$_POST['email'];
 $profile = @$_POST['steamurl'];
 
+//testiamo il json
+	$filename = "teamContact.json";
+	
+	if(file_exists($filename) && $string=file_get_contents($filename) !== false){
+		$string = file_get_contents($filename);
+	}
+	if(empty($name) || empty($email)) exit("Variabili non valide"); //controllo del non vuoto
+	//controllo che la stringa non sia vuota
+	if (isset($string)){
+	    //decodifico il file
+		$json = json_decode($string, true);
+		//controllo che la chiave equivalente a json[name] non sia giù usata
+		if (!empty($json[$name])) exit("$name gia' registrato");
+		//assegno la chiave
+        $json[$name] = $email;
+	}
+	else
+		$json = array($name => $email);
+
+	$output_json = json_encode($json);
+
+	//scriviamo il json
+	$file = fopen($filename, "w");
+	fwrite($file,$output_json);
+	fclose($file);
+		
+	echo 'Json data has been saved to '.$filename.'  <br>
+		<a href="'.$filename.'">Click here to read </a> <br><br>';
+		
+	
+
 // Write the name of text file where data will be store
 $filename = "Team.txt";
 
@@ -30,7 +61,7 @@ fclose($file);
 /*
 $filename = "TeamMail.txt";
 
-// Marge all the variables with text in a single variable. 
+// Merge all the variables with text in a single variable. 
 $f_data= ''.$email.'  ';
 
 echo 'Email data has been saved to '.$filename.'  <br>
@@ -71,34 +102,5 @@ $headers = 'From: info@titadota2.com' . "\r\n" .
     'X-Mailer: PHP/' . phpversion();
 
 mail($to, $subject, $message, $headers);
-
-//Scriviamolo su xml
-$xml = new DOMDocument('1.0', 'utf-8');
-$xml->formatOutput = true;
-$xml->preserveWhiteSpace = false;
-$xml->load('TeamMail.xml');
-
-$element = $xml->getElementsByTagName('team')->item(0);
-
-$timestamp = $element->getElementsByTagName('timestamp')->item(0);
-$name = $element->getElementsByTagName('Team')->item(0);
-$nick = $element->getElementsByTagName('Nick')->item(0);
-$email = $element->getElementsByTagName('Email')->item(0);
-$profile = $element->getElementsByTagName('SteamURL')->item(0);
-
-$newItem = $xml->createElement('team');
-
-$newItem->appendChild($xml->createElement('timestamp', date("F j, Y, g:i a",time())));;
-$newItem->appendChild($xml->createElement('Team', $_POST['name']));
-$newItem->appendChild($xml->createElement('Nick', $_POST['nick']));
-$newItem->appendChild($xml->createElement('Email', $_POST['email']));
-$newItem->appendChild($xml->createElement('SteamURL', $_POST['profile']));
-
-$xml->getElementsByTagName('entries')->item(0)->appendChild($newItem);
-
-$xml->save('TeamMail.xml');
-
-echo "XML List has been saved.";
-
 
 ?>
