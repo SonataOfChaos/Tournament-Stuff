@@ -1,15 +1,12 @@
-<html>
 <head>
-<title> Invio Mail </title>
+<title> Report Risultati </title>
 </head>
 <body>
-
-<form name="mail" action="InvioMail2.php" method="post">
+<center>
+<form name="Caricamento" enctype="multipart/form-data" action="InvioRisultati2.php" method="post">
 <p>
-<center><b> Invio mail </b> 
+<center><b> Modulo  <u>Risultati</u> </b>
 <br>
-<br>
-
 <?php
 	
 	$filename = "teamContact.json";
@@ -29,13 +26,10 @@
 	else
 		echo 'Nessuna lista contatti disponibile! <br>';
 ?>
+<input type="hidden" name="uploading"/>
+<br/>Screenshoot dei risultati: <input name="image" type="file" required />
 <br>
-Soggetto: <input type="text" name="soggetto" required><br>
-<br>
-Messaggio: <input type="text" name="messaggio" style="width: 300px" required><br>
-<br>
-<center><input type="submit" value=" Invia " ></center><br>
+<br/><input type="submit" value="Invia risultati" />
 </form>
-
+</center>
 </body>
-</html>
