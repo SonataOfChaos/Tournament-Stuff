@@ -8,6 +8,33 @@ $profile = @$_POST['steamurl'];
 $url = @$_POST['sito'];
 $commento = @$_POST['commento'];
 
+//testiamo il json
+	$filename = "casterContact.json";
+	
+	if(file_exists($filename) && $string=file_get_contents($filename) !== false){
+		$string = file_get_contents($filename);
+	}
+	if(empty($nick) || empty($email)) exit("Variabili non valide"); //controllo del non vuoto
+	$esplosione = ''.$nick.'_'.$email.'';
+	//controllo che la stringa non sia vuota
+	if (isset($string)){
+	    //decodifico il file
+		$json = json_decode($string, true);
+		//controllo che la chiave equivalente a json[nick] non sia giù usata
+		if (!empty($json[$nick])) exit("$nick gia' registrato");
+		//assegno la chiave
+        $json[$nick] = $esplosione;
+	}
+	else
+		$json = array($nick => $esplosione);
+
+	$output_json = json_encode($json);
+
+	//scriviamo il json
+	$file = fopen($filename, "w");
+	fwrite($file,$output_json);
+	fclose($file);		
+
 // Write the name of text file where data will be store
 $filename = "Casters.txt";
 

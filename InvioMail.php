@@ -13,18 +13,29 @@
 <?php
 	
 	$filename = "teamContact.json";
-	if(file_exists($filename) && $string=file_get_contents($filename) !== false){
+	$filename2 = "casterContact.json";
+	if(file_exists($filename) && $string=file_get_contents($filename) !== false && file_exists($filename2) && $string=file_get_contents($filename2) !== false){
 		$jsonData = file_get_contents($filename);
 		$json = json_decode($jsonData, true);
-	
+		
+		$jsonData2 = file_get_contents($filename2);
+		$json2 = json_decode($jsonData2, true);
+		
 		$opts = '';
 		foreach($json as $name => $email)
 		{
 			$opts .= '<option value="'.$email.'">'.$name.'</option>';
 		}
 		
-		echo ' <select name="Team1">'.$opts.'</select> <br> ';
-		echo ' <select name="Team2">'.$opts.'</select> <br>';
+		$opts2 = '';
+		foreach($json2 as $name2 => $email2)
+		{
+			$opts2 .= '<option value="'.$email2.'">'.$name2.'</option>';
+		}
+		
+		echo ' <select name="Team1">'.$opts.'</select> <input type="checkbox" name="check1" checked value="Yes" /> <br> ';
+		echo ' <select name="Team2">'.$opts.'</select> <input type="checkbox" name="check2" checked value="Yes" /> <br>';
+		echo ' <select name="caster">'.$opts2.'</select> <input type="checkbox" name="check3" value="Yes" /> <br>';
 	}
 	else
 		echo 'Nessuna lista contatti disponibile! <br>';
