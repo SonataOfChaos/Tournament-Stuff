@@ -1,5 +1,5 @@
 <?php
-
+// Gets Input value from Input boxes
 $team1 = @$_POST['Team1'];
 $team2 = @$_POST['Team2'];
 $caster = @$_POST['caster'];
@@ -17,7 +17,7 @@ $caster_temp = explode("_",$caster);
 $mail3 = $caster_temp[1];
 
 echo '<center>Mail inviate con successo!</center>';
-
+// Part that actually sends the mail to the right people
 $headers = 'From: noreply@titadota2.com' . "\r\n" .
     'Reply-To: postmaster@titadota2.com' . "\r\n" .
     'X-Mailer: PHP/' . phpversion();
