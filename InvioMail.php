@@ -14,6 +14,8 @@
 	
 	$filename = "teamContact.json";
 	$filename2 = "casterContact.json";
+	// Controls if filename1 and 2 actually exist and it's not null
+	//If files exist, decode them from JSON and add their values to the selection boxes
 	if(file_exists($filename) && $string=file_get_contents($filename) !== false && file_exists($filename2) && $string=file_get_contents($filename2) !== false){
 		$jsonData = file_get_contents($filename);
 		$json = json_decode($jsonData, true);
@@ -40,6 +42,7 @@
 	else
 		echo 'Nessuna lista contatti disponibile! <br>';
 ?>
+<!-- Various inputs -->
 <br>
 Soggetto: <input type="text" name="soggetto" required><br>
 <br>
